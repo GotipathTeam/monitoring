@@ -93,7 +93,17 @@ axios.get("https://fdjjhzpkjf.gpcdn.net/4583c542-201a-4f10-832b-1270d03936c3/pla
     data.payload.hls_data = report;
     document.querySelector("#http_report_hls").innerHTML = JSON.stringify(report, null, 2)
 })
-.catch((err)=>{ console.log(err) }).finally(()=>{ console.log("Finally") })
+.catch((err)=>{
+    var report = {
+        url : err.config.url,
+        status: err.status,
+        statusText: err.statusText,
+        message: err.message,
+        axiosError : err.toJSON(),
+    }
+    data.payload.hls_data = report;
+    document.querySelector("#http_report_hls").innerHTML = JSON.stringify(report, null, 2)
+ }).finally(()=>{ console.log("Finally") })
 
 axios.get("https://fdjjhzpkjf.gpcdn.net/4583c542-201a-4f10-832b-1270d03936c3/play_720p.mp4").then((res)=>{
     var report = {
@@ -106,7 +116,17 @@ axios.get("https://fdjjhzpkjf.gpcdn.net/4583c542-201a-4f10-832b-1270d03936c3/pla
     data.payload.mp4_data = report;
     document.querySelector("#http_report_mp4").innerHTML = JSON.stringify(report, null, 2)
 })
-.catch((err)=>{ console.log(err) }).finally(()=>{ console.log("Finally") })
+.catch((err)=>{
+    var report = {
+        url : err.config.url,
+        status: err.status,
+        statusText: err.statusText,
+        message: err.message,
+        axiosError : err.toJSON(),
+    }
+    data.payload.mp4_data = report;
+    document.querySelector("#http_report_mp4").innerHTML = JSON.stringify(report, null, 2)
+ }).finally(()=>{ console.log("Finally") })
 axios.get("https://fdjjhzpkjf.gpcdn.net/4583c542-201a-4f10-832b-1270d03936c3/preview.webp").then((res)=>{
     var report = {
         url : res.config.url,
@@ -118,7 +138,18 @@ axios.get("https://fdjjhzpkjf.gpcdn.net/4583c542-201a-4f10-832b-1270d03936c3/pre
     data.payload.image_data = report;
     document.querySelector("#http_report_img").innerHTML = JSON.stringify(report, null, 2)
 })
-.catch((err)=>{ console.log(err) }).finally(()=>{ console.log("Finally") })
+.catch((err)=>{
+    console.log("iamge err",err);
+    var report = {
+        url : err.config.url,
+        status: err.status,
+        statusText: err.statusText,
+        message: err.message,
+        axiosError : err.toJSON(),
+    }
+    data.payload.image_data = report;
+    document.querySelector("#http_report_img").innerHTML = JSON.stringify(report, null, 2)
+}).finally(()=>{ console.log("Finally") })
 
 // first, find all the div.code blocks
 document.querySelectorAll('div.code').forEach(el => {

@@ -24,6 +24,8 @@ var data = {
     }
 };
 
+document.querySelector("#session_id").innerHTML = data.session_id;
+
 let player = videojs("my-video", {
     html5: {
         nativeAudioTracks: false,

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Gotipath CDN Tools</title>
+  <script type="module" crossorigin src="/assets/index-0a1a4bf6.js"></script>
+  <link rel="stylesheet" href="/assets/index-b87cf20a.css">
+</head>
+
+<body>
+    <div class="flex justify-center flex-wrap">
+        <div>
+            <h4>HLS Videos</h4>
+            <video width="320px" id="my-video" class="video-js vjs-theme-city" controls preload="auto"></video>
+        </div>
+        <div>
+            <h4>MP4 Videos</h4>
+            <video width="320px" id="mp4-video" class="video-js vjs-theme-city" controls preload="auto"></video>
+        </div>
+        <div>
+            <img src="https://fdjjhzpkjf.gpcdn.net/4583c542-201a-4f10-832b-1270d03936c3/preview.webp" alt="">
+        </div>
+    </div>
+
+    <div>
+        <h1>Player Report</h1>
+        <div id="console" class="flex justify-center code mt-10">
+        </div>
+        <h1>Http Report (HLS)</h1>
+        <div id="http_report_hls" class="flex justify-center  code"></div>
+        <h1>Http Report (Mp4)</h1>
+        <div id="http_report_mp4" class="flex justify-center  code"></div>
+        <h1>Http Report (Image)</h1>
+        <div id="http_report_img" class="flex justify-center  code"></div>
+        <h1>User Info</h1>
+        <div id="user_info" class="flex justify-center code"></div>
+        <div id="user_ipinfo" class="flex justify-center code"></div>
+        <div id="error"></div>
+    </div>
+    
+</body>
+
+</html>

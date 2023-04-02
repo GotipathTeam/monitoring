@@ -19,7 +19,10 @@ var data = {
         player_data:{},
         image_data:{},
         mp4_data:{},
-        hls_data:{},
+        hls_data:{
+            sg:{}
+        },
+        hls_player_sg_data:{},
         networking:{}
     }
 };
@@ -35,6 +38,26 @@ let player = videojs("my-video", {
             overrideNative: true
         }
     }
+});
+
+let playerSG = videojs("my-video-sg", {
+    html5: {
+        nativeAudioTracks: false,
+        nativeVideoTracks: false,
+        vhs: {
+            debug: true,
+            overrideNative: true
+        }
+    }
+});
+
+
+playerSG.ready(function () {
+    this.src({
+        src: "https://hwgzgtrhbr.gpcdn.net/bc4db195-5423-4733-b193-7f5050c3627d/playlist.m3u8",
+        type: "application/x-mpegURL",
+        withCredentials: false
+    });
 });
 
 
@@ -105,6 +128,31 @@ axios.get("https://fdjjhzpkjf.gpcdn.net/a5f697cc-a270-4280-85aa-b691dc1194e1/pla
     }
     data.payload.hls_data = report;
     document.querySelector("#http_report_hls").innerHTML = JSON.stringify(report, null, 2)
+ }).finally(()=>{ console.log("Finally") })
+
+ axios.get("https://hwgzgtrhbr.gpcdn.net/bc4db195-5423-4733-b193-7f5050c3627d/playlist.m3u8").then((res)=>{
+    var report = {
+        url : res.config.url,
+        status: res.status,
+        statusText: res.statusText,
+        headers: res.headers.toJSON(),
+        requestHeaders : res.config.headers.toJSON(),
+    }
+    //response header
+
+    data.payload.hls_data.sg = report;
+    document.querySelector("#hls_player_sg_data").innerHTML = JSON.stringify(report, null, 2)
+})
+.catch((err)=>{
+    var report = {
+        url : err.config.url,
+        status: err.status,
+        statusText: err.statusText,
+        message: err.message,
+        axiosError : err.toJSON(),
+    }
+    data.payload.hls_data.sg = report;
+    document.querySelector("#hls_player_sg_data").innerHTML = JSON.stringify(report, null, 2)
  }).finally(()=>{ console.log("Finally") })
 
 axios.get("https://fdjjhzpkjf.gpcdn.net/4583c542-201a-4f10-832b-1270d03936c3/play_720p.mp4").then((res)=>{

@@ -59,7 +59,6 @@ playermp4.ready(function () {
 
 
 videojs.Vhs.xhr = _.wrap(videojs.xhr, function(fn, options, callback) {
-
     var wrapped_callback = _.wrap(callback, function(cb_fn, error, response) {
         var args = _.rest(arguments, 1);
         var report = response;
@@ -76,13 +75,13 @@ return fn.apply(this, [options, wrapped_callback]);
 
 player.ready(function () {
     this.src({
-        src: "https://fdjjhzpkjf.gpcdn.net/4583c542-201a-4f10-832b-1270d03936c3/playlist.m3u8",
+        src: "https://fdjjhzpkjf.gpcdn.net/a5f697cc-a270-4280-85aa-b691dc1194e1/playlist.m3u8",
         type: "application/x-mpegURL",
         withCredentials: false
     });
 });
 
-axios.get("https://fdjjhzpkjf.gpcdn.net/4583c542-201a-4f10-832b-1270d03936c3/playlist.m3u8").then((res)=>{
+axios.get("https://fdjjhzpkjf.gpcdn.net/a5f697cc-a270-4280-85aa-b691dc1194e1/playlist.m3u8").then((res)=>{
     var report = {
         url : res.config.url,
         status: res.status,
@@ -90,6 +89,9 @@ axios.get("https://fdjjhzpkjf.gpcdn.net/4583c542-201a-4f10-832b-1270d03936c3/pla
         headers: res.headers.toJSON(),
         requestHeaders : res.config.headers.toJSON(),
     }
+    //response header
+    console.log("res",res.headers["x-cache"]);
+
     data.payload.hls_data = report;
     document.querySelector("#http_report_hls").innerHTML = JSON.stringify(report, null, 2)
 })

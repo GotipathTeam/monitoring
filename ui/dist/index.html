@@ -11,7 +11,12 @@
 </head>
 
 <body>
+    <div class="py-10">
+        <h1 class="flex justify-center text-xl py-2 px-5 text-green-600">Session Id : <span id="session_id"></span>
+        </h1>
+    </div>
     <div class="flex justify-center flex-wrap">
+
         <div>
             <h4>HLS Videos</h4>
             <video width="320px" id="my-video" class="video-js vjs-theme-city" controls preload="auto"></video>
@@ -30,7 +35,6 @@
     </div>
 
     <div>
-        <h1>Session Id : <span id="session_id"></span></h1>
         <h1>Player Report</h1>
         <div id="console" class="flex justify-center code mt-10">
         </div>

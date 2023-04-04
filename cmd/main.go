@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/contrib/static"
@@ -15,6 +16,14 @@ import (
 func main() {
 	router := gin.New()
 	router.Use(static.Serve("/", static.LocalFile("./ui/dist", true)))
+	router.NoRoute(func(c *gin.Context) {
+		if !strings.HasPrefix(c.Request.RequestURI, "v1") {
+			c.File("./ui/dist/index.html")
+			return
+		}
+		c.AbortWithStatus(404)
+	})
+
 	router.Use(
 		gin.Logger(),
 		gin.Recovery(),

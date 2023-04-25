@@ -24,6 +24,16 @@ func main() {
 		c.AbortWithStatus(404)
 	})
 
+	router.Use(static.Serve("/new", static.LocalFile("./ui/dist", true)))
+	router.NoRoute(func(c *gin.Context) {
+		if !strings.HasPrefix(c.Request.RequestURI, "v1") {
+			c.File("./ui/dist/index.html")
+			return
+		}
+		c.AbortWithStatus(404)
+	})
+
+
 	router.Use(
 		gin.Logger(),
 		gin.Recovery(),

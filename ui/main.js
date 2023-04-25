@@ -40,25 +40,7 @@ let player = videojs("my-video", {
     }
 });
 
-let playerSG = videojs("my-video-sg", {
-    html5: {
-        nativeAudioTracks: false,
-        nativeVideoTracks: false,
-        vhs: {
-            debug: true,
-            overrideNative: true
-        }
-    }
-});
 
-
-playerSG.ready(function () {
-    this.src({
-        src: "https://hwgzgtrhbr.gpcdn.net/bc4db195-5423-4733-b193-7f5050c3627d/playlist.m3u8",
-        type: "application/x-mpegURL",
-        withCredentials: false
-    });
-});
 
 
 let playermp4 = videojs("mp4-video", {
@@ -74,7 +56,7 @@ let playermp4 = videojs("mp4-video", {
 
 playermp4.ready(function () {
     this.src({
-        src: "https://fdjjhzpkjf.gpcdn.net/4583c542-201a-4f10-832b-1270d03936c3/play_720p.mp4",
+        src: "https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/play_720p.mp4",
         type: "video/mp4",
         withCredentials: false
     });
@@ -98,13 +80,13 @@ return fn.apply(this, [options, wrapped_callback]);
 
 player.ready(function () {
     this.src({
-        src: "https://fdjjhzpkjf.gpcdn.net/a5f697cc-a270-4280-85aa-b691dc1194e1/playlist.m3u8",
+        src: "https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/playlist.m3u8",
         type: "application/x-mpegURL",
         withCredentials: false
     });
 });
 
-axios.get("https://fdjjhzpkjf.gpcdn.net/a5f697cc-a270-4280-85aa-b691dc1194e1/playlist.m3u8").then((res)=>{
+axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/playlist.m3u8").then((res)=>{
     var report = {
         url : res.config.url,
         status: res.status,
@@ -130,32 +112,8 @@ axios.get("https://fdjjhzpkjf.gpcdn.net/a5f697cc-a270-4280-85aa-b691dc1194e1/pla
     document.querySelector("#http_report_hls").innerHTML = JSON.stringify(report, null, 2)
  }).finally(()=>{ console.log("Finally") })
 
- axios.get("https://hwgzgtrhbr.gpcdn.net/bc4db195-5423-4733-b193-7f5050c3627d/playlist.m3u8").then((res)=>{
-    var report = {
-        url : res.config.url,
-        status: res.status,
-        statusText: res.statusText,
-        headers: res.headers.toJSON(),
-        requestHeaders : res.config.headers.toJSON(),
-    }
-    //response header
 
-    data.payload.hls_data.sg = report;
-    document.querySelector("#hls_player_sg_data").innerHTML = JSON.stringify(report, null, 2)
-})
-.catch((err)=>{
-    var report = {
-        url : err.config.url,
-        status: err.status,
-        statusText: err.statusText,
-        message: err.message,
-        axiosError : err.toJSON(),
-    }
-    data.payload.hls_data.sg = report;
-    document.querySelector("#hls_player_sg_data").innerHTML = JSON.stringify(report, null, 2)
- }).finally(()=>{ console.log("Finally") })
-
-axios.get("https://fdjjhzpkjf.gpcdn.net/4583c542-201a-4f10-832b-1270d03936c3/play_720p.mp4").then((res)=>{
+axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/play_720p.mp4").then((res)=>{
     var report = {
         url : res.config.url,
         status: res.status,
@@ -177,7 +135,8 @@ axios.get("https://fdjjhzpkjf.gpcdn.net/4583c542-201a-4f10-832b-1270d03936c3/pla
     data.payload.mp4_data = report;
     document.querySelector("#http_report_mp4").innerHTML = JSON.stringify(report, null, 2)
  }).finally(()=>{ console.log("Finally") })
-axios.get("https://fdjjhzpkjf.gpcdn.net/4583c542-201a-4f10-832b-1270d03936c3/preview.webp").then((res)=>{
+
+axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/preview.webp").then((res)=>{
     var report = {
         url : res.config.url,
         status: res.status,

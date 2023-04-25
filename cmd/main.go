@@ -49,7 +49,7 @@ func getReports(c *gin.Context) {
 		})
 	}
 	var reports []models.Report
-	db.Model(&models.Report{}).Order("created_at DESC").Find(&reports)
+	db.Model(&models.Report{}).Order("created_at DESC").Limit(10).Find(&reports)
 	c.JSON(http.StatusOK, reports)
 }
 

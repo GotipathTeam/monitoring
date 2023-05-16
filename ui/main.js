@@ -232,10 +232,19 @@ function NewWorkingInfo(params) {
 NewWorkingInfo()
 
 window.addEventListener("load", (event) => {
-    console.log("page is fully loaded");
     let timeOut = setTimeout(function() {
         console.log("timeout");
         createReport()
     }, 1000 * 2);
 
 });
+
+getInfoInfo();
+
+function getInfoInfo() {
+    axios.get("https://ipinfo.nusratech.com").then((res)=>{
+       document.querySelector("#ip").innerHTML= res.data.ip;
+    }).catch((err)=>{
+        document.querySelector("#error").innerHTML = JSON.stringify(err, null, 2)
+    }).finally(()=>{ console.log("ip") })
+}

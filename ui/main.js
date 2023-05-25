@@ -17,19 +17,15 @@ var data = {
             ipinfo:{}
         },
         player_data:{},
-        image_data:{},
-        mp4_data:{},
-        hls_data:{
-            sg:{}
-        },
-        hls_player_sg_data:{},
+        gotipath_hsl_data:{},
+        gpcdn_hsl_data:{},
         networking:{}
     }
 };
 
 document.querySelector("#session_id").innerHTML = data.session_id;
 
-let player = videojs("my-video", {
+let gpcdnPlayer = videojs("gpcdn_video", {
     html5: {
         nativeAudioTracks: false,
         nativeVideoTracks: false,
@@ -40,24 +36,31 @@ let player = videojs("my-video", {
     }
 });
 
-
-
-
-let playermp4 = videojs("mp4-video", {
-    html5: {
-        nativeAudioTracks: false,
-        nativeVideoTracks: false,
-        vhs: {
-            debug: true,
-            overrideNative: true
-        }
-    }
-});
-
-playermp4.ready(function () {
+gpcdnPlayer.ready(function () {
     this.src({
-        src: "https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/play_720p.mp4",
-        type: "video/mp4",
+        src: "https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/playlist.m3u8",
+        type: "application/x-mpegURL",
+        withCredentials: false
+    });
+});
+
+
+let gotpathPlayer = videojs("gotipath_video", {
+    html5: {
+        nativeAudioTracks: false,
+        nativeVideoTracks: false,
+        vhs: {
+            debug: true,
+            overrideNative: true
+        }
+    }
+});
+
+
+gotpathPlayer.ready(function () {
+    this.src({
+        src: "https://videocdn.gotipath.com/1a082fad-0e02-4964-8123-2a87ad91ff2c/playlist.m3u8",
+        type: "application/x-mpegURL",
         withCredentials: false
     });
 });
@@ -77,14 +80,7 @@ return fn.apply(this, [options, wrapped_callback]);
 });
 
 
-
-player.ready(function () {
-    this.src({
-        src: "https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/playlist.m3u8",
-        type: "application/x-mpegURL",
-        withCredentials: false
-    });
-});
+// gpcdn
 
 axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/playlist.m3u8").then((res)=>{
     var report = {
@@ -94,11 +90,35 @@ axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/pla
         headers: res.headers.toJSON(),
         requestHeaders : res.config.headers.toJSON(),
     }
+
+    data.payload.gpcdn_hsl_data = report;
+    document.querySelector("#gpcdn_http_report_hls").innerHTML = JSON.stringify(report, null, 2)
+})
+.catch((err)=>{
+    var report = {
+        url : err.config.url,
+        status: err.status,
+        statusText: err.statusText,
+        message: err.message,
+        axiosError : err.toJSON(),
+    }
+    data.payload.gpcdn_hsl_data = report;
+    document.querySelector("#gpcdn_http_report_hls").innerHTML = JSON.stringify(report, null, 2)
+ }).finally(()=>{ console.log("Finally") })
+
+
+//  gotipath.com cdn
+ axios.get("https://videocdn.gotipath.com/1a082fad-0e02-4964-8123-2a87ad91ff2c/playlist.m3u8").then((res)=>{
+    var report = {
+        url : res.config.url,
+        status: res.status,
+        statusText: res.statusText,
+        headers: res.headers.toJSON(),
+        requestHeaders : res.config.headers.toJSON(),
+    }
     //response header
-    console.log("res",res.headers["x-cache"]);
-
-    data.payload.hls_data = report;
-    document.querySelector("#http_report_hls").innerHTML = JSON.stringify(report, null, 2)
+    data.payload.gotipath_hsl_data = report;
+    document.querySelector("#gotipath_http_report_hls").innerHTML = JSON.stringify(report, null, 2)
 })
 .catch((err)=>{
     var report = {
@@ -108,57 +128,10 @@ axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/pla
         message: err.message,
         axiosError : err.toJSON(),
     }
-    data.payload.hls_data = report;
-    document.querySelector("#http_report_hls").innerHTML = JSON.stringify(report, null, 2)
+    data.payload.gotipath_hsl_data = report;
+    document.querySelector("#gotipath_http_report_hls").innerHTML = JSON.stringify(report, null, 2)
  }).finally(()=>{ console.log("Finally") })
 
-
-axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/play_720p.mp4").then((res)=>{
-    var report = {
-        url : res.config.url,
-        status: res.status,
-        statusText: res.statusText,
-        headers: res.headers.toJSON(),
-        requestHeaders : res.config.headers.toJSON(),
-    }
-    data.payload.mp4_data = report;
-    document.querySelector("#http_report_mp4").innerHTML = JSON.stringify(report, null, 2)
-})
-.catch((err)=>{
-    var report = {
-        url : err.config.url,
-        status: err.status,
-        statusText: err.statusText,
-        message: err.message,
-        axiosError : err.toJSON(),
-    }
-    data.payload.mp4_data = report;
-    document.querySelector("#http_report_mp4").innerHTML = JSON.stringify(report, null, 2)
- }).finally(()=>{ console.log("Finally") })
-
-axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/preview.webp").then((res)=>{
-    var report = {
-        url : res.config.url,
-        status: res.status,
-        statusText: res.statusText,
-        headers: res.headers.toJSON(),
-        requestHeaders : res.config.headers.toJSON(),
-    }
-    data.payload.image_data = report;
-    document.querySelector("#http_report_img").innerHTML = JSON.stringify(report, null, 2)
-})
-.catch((err)=>{
-    console.log("iamge err",err);
-    var report = {
-        url : err.config.url,
-        status: err.status,
-        statusText: err.statusText,
-        message: err.message,
-        axiosError : err.toJSON(),
-    }
-    data.payload.image_data = report;
-    document.querySelector("#http_report_img").innerHTML = JSON.stringify(report, null, 2)
-}).finally(()=>{ console.log("Finally") })
 
 // first, find all the div.code blocks
 document.querySelectorAll('div.code').forEach(el => {
@@ -214,7 +187,6 @@ console.log(c);
 function NewWorkingInfo(params) {
     if (window.navigator && window.navigator.connection){
         const c = window.navigator.connection;
-        console.log(c);
         var report = {
             type : c.type,
             effectiveType : c.effectiveType,
@@ -223,7 +195,6 @@ function NewWorkingInfo(params) {
             rtt : c.rtt,
             saveData : c.saveData,
         }
-        console.log(report);
         data.payload.networking = report;
 
     }
@@ -233,7 +204,6 @@ NewWorkingInfo()
 
 window.addEventListener("load", (event) => {
     let timeOut = setTimeout(function() {
-        console.log("timeout");
         createReport()
     }, 1000 * 2);
 

@@ -19,15 +19,12 @@
     <div class="flex justify-center flex-wrap">
 
         <div>
-            <h4>HLS Videos</h4>
-            <video width="320px" id="my-video" class="video-js vjs-theme-city" controls preload="auto"></video>
+            <h4>HLS Videos(gpcdn.net)</h4>
+            <video width="320px" id="gpcdn_video" class="video-js vjs-theme-city" controls preload="auto"></video>
         </div>
         <div>
-            <h4>MP4 Videos</h4>
-            <video width="320px" id="mp4-video" class="video-js vjs-theme-city" controls preload="auto"></video>
-        </div>
-        <div>
-            <img src="https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/preview.webp" alt="">
+            <h4>HLS Videos(gotipath.com)</h4>
+            <video width="320px" id="gotipath_video" class="video-js vjs-theme-city" controls preload="auto"></video>
         </div>
     </div>
 
@@ -35,12 +32,14 @@
         <h1>Player Report</h1>
         <div id="console" class="flex justify-center code mt-10">
         </div>
-        <h1>Http Report (HLS)</h1>
-        <div id="http_report_hls" class="flex justify-center  code"></div>
-        <h1>Http Report (Mp4)</h1>
-        <div id="http_report_mp4" class="flex justify-center  code"></div>
-        <h1>Http Report (Image)</h1>
-        <div id="http_report_img" class="flex justify-center  code"></div>
+        <div>
+            <h1>Http Report (gpcdn.net)</h1>
+            <div id="gpcdn_http_report_hls" class="flex justify-center  code"></div>
+        </div>
+        <div>
+            <h1>Http Report (gotipath.com)</h1>
+            <div id="gotipath_http_report_hls" class="flex justify-center  code"></div>
+        </div>
         <h1>User Info</h1>
         <div id="user_info" class="flex justify-center code"></div>
         <div id="user_ipinfo" class="flex justify-center code"></div>

@@ -81,7 +81,7 @@ let gc_gotipath_video = videojs("gc_gotipath_video", {
 
 gc_gotipath_video.ready(function () {
     this.src({
-        src: "http://gcvideo.gotipath.com/1a082fad-0e02-4964-8123-2a87ad91ff2c/playlist.m3u8",
+        src: "https://gcvideo.gotipath.com/1a082fad-0e02-4964-8123-2a87ad91ff2c/playlist.m3u8",
         type: "application/x-mpegURL",
         withCredentials: false
     });
@@ -155,7 +155,7 @@ axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/pla
 
 
  //  gc_gotipath_video
- axios.get("http://gcvideo.gotipath.com/1a082fad-0e02-4964-8123-2a87ad91ff2c/playlist.m3u8").then((res)=>{
+ axios.get("https://gcvideo.gotipath.com/1a082fad-0e02-4964-8123-2a87ad91ff2c/playlist.m3u8").then((res)=>{
     var report = {
         url : res.config.url,
         status: res.status,

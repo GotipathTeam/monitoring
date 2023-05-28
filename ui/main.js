@@ -17,9 +17,10 @@ var data = {
             ipinfo:{}
         },
         player_data:{},
-        gotipath_hsl_data:{},
-        gpcdn_hsl_data:{},
+        gotipath_video:{},
+        gpcdn_video:{},
         gc_gotipath_video:{},
+        gc_gpcdn_video:{},
         networking:{}
     }
 };
@@ -133,7 +134,7 @@ axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/pla
         requestHeaders : res.config.headers.toJSON(),
     }
 
-    data.payload.gpcdn_hsl_data = report;
+    data.payload.gpcdn_video = report;
     document.querySelector("#gpcdn_http_report_hls").innerHTML = JSON.stringify(report, null, 2)
 })
 .catch((err)=>{
@@ -144,7 +145,7 @@ axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/pla
         message: err.message,
         axiosError : err.toJSON(),
     }
-    data.payload.gpcdn_hsl_data = report;
+    data.payload.gpcdn_video = report;
     document.querySelector("#gpcdn_http_report_hls").innerHTML = JSON.stringify(report, null, 2)
  }).finally(()=>{ console.log("Finally") })
 
@@ -159,7 +160,7 @@ axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/pla
         requestHeaders : res.config.headers.toJSON(),
     }
     //response header
-    data.payload.gotipath_hsl_data = report;
+    data.payload.gotipath_video = report;
     document.querySelector("#gotipath_http_report_hls").innerHTML = JSON.stringify(report, null, 2)
 })
 .catch((err)=>{
@@ -170,7 +171,7 @@ axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/pla
         message: err.message,
         axiosError : err.toJSON(),
     }
-    data.payload.gotipath_hsl_data = report;
+    data.payload.gotipath_video = report;
     document.querySelector("#gotipath_http_report_hls").innerHTML = JSON.stringify(report, null, 2)
  }).finally(()=>{ console.log("Finally") })
 
@@ -186,7 +187,7 @@ axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/pla
     }
     //response header
     data.payload.gc_gotipath_video = report;
-    document.querySelector("#gotipath_http_report_hls").innerHTML = JSON.stringify(report, null, 2)
+    document.querySelector("#gc_gotipath_http_report_hls").innerHTML = JSON.stringify(report, null, 2)
 })
 .catch((err)=>{
     var report = {
@@ -196,8 +197,35 @@ axios.get("https://spnkvwlhdc.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/pla
         message: err.message,
         axiosError : err.toJSON(),
     }
-    data.payload.gotipath_hsl_data = report;
-    document.querySelector("#gotipath_http_report_hls").innerHTML = JSON.stringify(report, null, 2)
+    data.payload.gc_gotipath_video = report;
+    document.querySelector("#gc_gotipath_http_report_hls").innerHTML = JSON.stringify(report, null, 2)
+ }).finally(()=>{ console.log("Finally") })
+
+
+
+  //  gc_gpcdn_http_report_hls
+  axios.get("https://videocdn.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/playlist.m3u8").then((res)=>{
+    var report = {
+        url : res.config.url,
+        status: res.status,
+        statusText: res.statusText,
+        headers: res.headers.toJSON(),
+        requestHeaders : res.config.headers.toJSON(),
+    }
+    //response header
+    data.payload.gc_gpcdn_video = report;
+    document.querySelector("#gc_gpcdn_http_report_hls").innerHTML = JSON.stringify(report, null, 2)
+})
+.catch((err)=>{
+    var report = {
+        url : err.config.url,
+        status: err.status,
+        statusText: err.statusText,
+        message: err.message,
+        axiosError : err.toJSON(),
+    }
+    data.payload.gc_gpcdn_video = report;
+    document.querySelector("#gc_gpcdn_http_report_hls").innerHTML = JSON.stringify(report, null, 2)
  }).finally(()=>{ console.log("Finally") })
 
 
@@ -228,7 +256,7 @@ function UserInfo(params) {
 }
 UserInfo();
 
-
+// https://monitoring.gotipath.com/cdn/insights
 function createReport(){
     axios.post("https://monitoring.gotipath.com/cdn/insights", data).then((res)=>{
         console.log(res);

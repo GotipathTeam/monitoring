@@ -16,6 +16,7 @@ import (
 )
 
 func main() {
+	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
 	router.Use(
 		gin.Logger(),
@@ -100,19 +101,10 @@ func createReport(c *gin.Context) {
 }
 
 type ReportRequest struct {
-	SessionId  string     `json:"session_id"`
-	ReportName string     `json:"report_name"`
-	ReportType string     `json:"report_type"`
-	ReportData ReportData `json:"payload"`
-}
-
-type ReportData struct {
-	ClientInfo   interface{} `json:"client_info"`
-	PlayerData   interface{} `json:"player_data"`
-	ImageData    interface{} `json:"image_data"`
-	Mp4VideoData interface{} `json:"mp4_data"`
-	HlsVideoData interface{} `json:"hls_data"`
-	Networking   interface{} `json:"networking"`
+	SessionId  string      `json:"session_id"`
+	ReportName string      `json:"report_name"`
+	ReportType string      `json:"report_type"`
+	ReportData interface{} `json:"payload"`
 }
 
 func uniqueId() string {

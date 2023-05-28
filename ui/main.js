@@ -87,6 +87,27 @@ gc_gotipath_video.ready(function () {
     });
 });
 
+
+let gc_gpcdn_video = videojs("gc_gpcdn_video", {
+    html5: {
+        nativeAudioTracks: false,
+        nativeVideoTracks: false,
+        vhs: {
+            debug: true,
+            overrideNative: true
+        }
+    }
+});
+
+gc_gpcdn_video.ready(function () {
+    this.src({
+        src: "https://videocdn.gpcdn.net/1a082fad-0e02-4964-8123-2a87ad91ff2c/playlist.m3u8",
+        type: "application/x-mpegURL",
+        withCredentials: false
+    });
+});
+
+
 videojs.Vhs.xhr = _.wrap(videojs.xhr, function(fn, options, callback) {
     var wrapped_callback = _.wrap(callback, function(cb_fn, error, response) {
         var args = _.rest(arguments, 1);

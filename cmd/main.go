@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"math/rand"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/contrib/static"
@@ -15,25 +17,6 @@ import (
 
 func main() {
 	router := gin.New()
-	router.Use(static.Serve("/", static.LocalFile("./ui/dist", true)))
-	router.NoRoute(func(c *gin.Context) {
-		if !strings.HasPrefix(c.Request.RequestURI, "v1") {
-			c.File("./ui/dist/index.html")
-			return
-		}
-		c.AbortWithStatus(404)
-	})
-
-	router.Use(static.Serve("/new", static.LocalFile("./ui/dist", true)))
-	router.NoRoute(func(c *gin.Context) {
-		if !strings.HasPrefix(c.Request.RequestURI, "v1") {
-			c.File("./ui/dist/index.html")
-			return
-		}
-		c.AbortWithStatus(404)
-	})
-
-
 	router.Use(
 		gin.Logger(),
 		gin.Recovery(),
@@ -45,6 +28,16 @@ func main() {
 			ExposeHeaders:    []string{"Access-Control-Allow-Headers", "Upload-Offset", "Location", "Upload-Length", "Tus-Version", "Tus-Resumable", "Tus-Max-Size", "Tus-Extension", "Upload-Metadata", "Upload-Defer-Length", "Upload-Concat", "Location", "Upload-Offset", "Upload-Length"},
 		}),
 	)
+	router.Use(staticNoCache())
+	router.Use(static.Serve("/", static.LocalFile("./ui/dist", true)))
+	router.NoRoute(func(c *gin.Context) {
+		if !strings.HasPrefix(c.Request.RequestURI, "v1") {
+			c.File("./ui/dist/index.html")
+			return
+		}
+		c.AbortWithStatus(404)
+	})
+
 	router.GET("/cdn/reports", getReports)
 	router.POST("/cdn/insights", createReport)
 	router.Run(":8089") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
@@ -120,4 +113,25 @@ type ReportData struct {
 	Mp4VideoData interface{} `json:"mp4_data"`
 	HlsVideoData interface{} `json:"hls_data"`
 	Networking   interface{} `json:"networking"`
+}
+
+func uniqueId() string {
+	rand.Seed(time.Now().UnixNano())
+	return randSeq(10)
+}
+
+func randSeq(n int) string {
+	var letters = []rune("bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ0123456789")
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
+	}
+	return strings.ToLower(string(b))
+}
+
+func staticNoCache() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Header("Cache-Control", "no-store")
+		c.Next()
+	}
 }

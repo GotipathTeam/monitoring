@@ -2,7 +2,6 @@ import './style.css'
 import "video.js/dist/video-js.css";
 import videojs from "video.js";
 import axios from 'axios';
-import beautify from "json-beautify";
 import _ from 'underscore';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
